@@ -99,36 +99,18 @@ h1 {
 }
 
 @media screen and (min-width: 600px) {
-  button {
-    width: 280px;
-    height: 40px;
-    font-size: 13px;
-  }
-
   h1 {
     font-size: 18px;
   }
 }
 
 @media screen and (min-width: 900px) {
-  button {
-    width: 350px;
-    height: 40px;
-    font-size: 15px;
-  }
-
   h1 {
     font-size: 21px;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  button {
-    width: 400px;
-    height: 50px;
-    font-size: 17px;
-  }
-
   h1 {
     font-size: 24px;
   }
