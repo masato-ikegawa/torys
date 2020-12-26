@@ -1,10 +1,13 @@
 <template>
   <div class="container">
-    <h1>ニコニコおみくじ</h1>
-    <Button class="btn disp" label="おみくじを回す" @click="tappedBtn"></Button>
-    <Button class="btn nodisp" label="もう1度回す" @click="tappedBtn"></Button>
-    <Loading class="loading nodisp"></Loading>
-    <TweetButton after=true :result="resultValue" class="tweet nodisp"></TweetButton>
+    <ImageButton />
+    <div class="omikuji-wrapper nodisp">
+      <h1>ニコニコおみくじ</h1>
+      <Button class="btn disp" label="おみくじを回す" @click="tappedBtn"></Button>
+      <Button class="btn nodisp" label="もう1度回す" @click="tappedBtn"></Button>
+      <Loading class="loading nodisp"></Loading>
+      <TweetButton after="true" :result="resultValue" class="tweet nodisp"></TweetButton>
+    </div>
     <Footer />
   </div>
 </template>
@@ -14,6 +17,7 @@ import Button from "./components/Button.vue";
 import Loading from "./components/Loading.vue";
 import Footer from "./components/Footer.vue";
 import TweetButton from "./components/TweetButton.vue";
+import ImageButton from "./components/ImageButton.vue";
 
 function omikuji() {
   var random = Math.floor(Math.random() * 16);
@@ -26,12 +30,13 @@ export default {
     Button,
     Loading,
     Footer,
-    TweetButton
+    TweetButton,
+    ImageButton,
   },
   data() {
     return {
       resultValue: "",
-    }
+    };
   },
   methods: {
     tappedBtn() {
@@ -54,25 +59,25 @@ export default {
       setTimeout(() => {
         if (result < 1) {
           this.$el.children[0].textContent = "大凶…";
-          this.$data.resultValue = "大凶"
+          this.$data.resultValue = "大凶";
         } else if (result < 3) {
           this.$el.children[0].textContent = "凶…";
-          this.$data.resultValue = "凶"
+          this.$data.resultValue = "凶";
         } else if (result < 6) {
           this.$el.children[0].textContent = "末吉";
-          this.$data.resultValue = "末吉"
+          this.$data.resultValue = "末吉";
         } else if (result < 10) {
           this.$el.children[0].textContent = "小吉";
-          this.$data.resultValue = "小吉"
+          this.$data.resultValue = "小吉";
         } else if (result < 13) {
           this.$el.children[0].textContent = "中吉";
-          this.$data.resultValue = "中吉"
+          this.$data.resultValue = "中吉";
         } else if (result < 15) {
           this.$el.children[0].textContent = "吉！";
-          this.$data.resultValue = "吉"
+          this.$data.resultValue = "吉";
         } else {
           this.$el.children[0].textContent = "大吉！";
-          this.$data.resultValue = "大吉"
+          this.$data.resultValue = "大吉";
         }
         this.$el.children[2].classList.remove("nodisp");
         this.$el.children[2].classList.add("disp");
@@ -89,6 +94,12 @@ export default {
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
 }
@@ -125,7 +136,7 @@ h1 {
   display: none;
 }
 
-.tweet{
+.tweet {
   margin-top: 30px;
   margin-right: auto;
   margin-left: auto;
