@@ -2,6 +2,7 @@
   <div>
     <h1>{{ theme }}</h1>
     <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
+    <img :src="imageData" v-if="imageData" />
     <TweetButton
       after="true"
       result="resultValue"
@@ -30,6 +31,7 @@ export default {
       theme: "ニコニコおみくじ",
       isTweetDisp: false,
       isTweetNodisp: true,
+      imageData: "",
     };
   },
   methods: {
@@ -42,6 +44,12 @@ export default {
       this.isDisp = false;
       this.isNodisp = true;
       this.theme = "エラー…";
+    },
+    success(resultText, resultImgData) {
+      this.isDisp = false;
+      this.isNodisp = true;
+      this.theme = resultText;
+      this.imageData = resultImgData;
     },
   },
 };

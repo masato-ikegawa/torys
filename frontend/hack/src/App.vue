@@ -59,6 +59,7 @@ export default {
     return {
       resultText: "",
       imgData: "",
+      resImgData: "",
       result: Number,
       activate: { type: Boolean, default: false },
       isBtnDisp: true,
@@ -106,6 +107,9 @@ export default {
         this.atension = "画像を選択してください";
       }
     },
+    getRes() {
+      this.$refs.omikujiRef.success(this.resultText, this.resImgData);
+    },
     dResult() {
       const resValue = this.shuffle();
       if (resValue === 0) {
@@ -132,6 +136,8 @@ export default {
         .then((res) => {
           console.log("登録完了");
           console.log("res:", res);
+          this.resImgData = res.data("img");
+          this.getRes();
         })
         .catch((err) => {
           console.log(err);
