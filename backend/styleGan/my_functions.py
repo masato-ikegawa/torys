@@ -220,3 +220,49 @@ def display(vec_syn):
         ax.set_xlabel(str(i), fontsize=20)               
     plt.show()
     plt.close()
+
+# ------------  潜在変数(ベクトル)の探索　------------
+def my_project_real_images(num_images, data_dir): 
+    network_pkl = 'gdrive:networks/stylegan2-ffhq-config-f.pkl'
+    dataset_name = 'dataset'
+    #data_dir = 'my' 
+    num_snapshots = 5
+
+    print('Loading networks from "%s"...' % network_pkl)
+    _G, _D, Gs = pretrained_networks.load_networks(network_pkl)
+    proj = projector.Projector()
+    proj.set_network(Gs)
+
+    print('Loading images from "%s"...' % dataset_name)
+    dataset_obj = dataset.load_dataset(data_dir=data_dir, tfrecord_dir=dataset_name, max_label_size=0, repeat=False, shuffle_mb=0)
+    assert dataset_obj.shape == Gs.output_shape[1:]
+
+    os.makedirs(data_dir+'/real_images', exist_ok=True)  
+    for image_idx in range(num_images):
+        print('Projecting image %d/%d ...' % (image_idx, num_images))
+        images, _labels = dataset_obj.get_minibatch_np(1)
+        images = misc.adjust_dynamic_range(images, [0, 255], [-1, 1])
+        
+        targets=images
+        png_prefix=data_dir+'/real_images/image'+str(image_idx)
+        num_snapshots=num_snapshots
+                
+        snapshot_steps = set(proj.num_steps - np.linspace(0, proj.num_steps, num_snapshots, endpoint=False, dtype=int))
+        misc.save_image_grid(targets, png_prefix + 'target.png', drange=[-1,1])
+        proj.start(targets)
+        while proj.get_cur_step() < proj.num_steps:
+            print('\r%d / %d ... ' % (proj.get_cur_step(), proj.num_steps), end='', flush=True)
+            proj.step()
+            if proj.get_cur_step() in snapshot_steps:
+                misc.save_image_grid(proj.get_images(), png_prefix + 'step%04d.png' % proj.get_cur_step(), drange=[-1,1])
+            
+            if proj.get_cur_step() == proj.num_steps:  
+                vec = proj.get_dlatents() 
+                if image_idx == 0:
+                   vec_syn = vec
+                else:
+                   vec_syn = np.concatenate([vec_syn, vec])  
+                print(vec_syn.shape)  
+        print('\r%-30s\r' % '', end='', flush=True)
+
+    return vec_syn
