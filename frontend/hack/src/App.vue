@@ -109,7 +109,7 @@ body {
 .container {
   width: 100%;
   min-height: 100vh;
-  height: 700px;
+  height: 500px;
   position: relative;
   box-sizing: border-box;
 }

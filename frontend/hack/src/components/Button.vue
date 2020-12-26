@@ -14,15 +14,15 @@ export default {
 <style scoped>
 button {
   user-select: none;
-  width: 280px;
-  height: 40px;
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
-  border: solid 1px #000;
+  width: 250px;
+  height: 40px;
+  border: solid 4px rgb(255, 16, 18);
   border-radius: 10px;
-  background: rgb(249, 142, 18);
+  background: white;
   font-weight: bold;
-  color: #fff;
+  color: rgb(255, 16, 18);
 }
 
 button:hover {
@@ -35,7 +35,7 @@ button:focus {
 
 @media screen and (min-width: 600px) {
   button {
-    width: 280px;
+    width: 250px;
     height: 40px;
     font-size: 13px;
   }
@@ -43,15 +43,15 @@ button:focus {
 
 @media screen and (min-width: 900px) {
   button {
-    width: 350px;
-    height: 40px;
+    width: 300px;
+    height: 45px;
     font-size: 15px;
   }
 }
 
 @media screen and (min-width: 1200px) {
   button {
-    width: 400px;
+    width: 450px;
     height: 50px;
     font-size: 17px;
   }
