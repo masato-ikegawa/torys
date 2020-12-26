@@ -48,20 +48,28 @@ export default {
     loading() {
       this.isDisp = true;
       this.isNodisp = false;
-      this.theme = "NowLoading...(30秒に1匹犬が増えます)";
+      this.theme = "NowLoading...(1秒に1匹犬が増えます)";
+      var count = 0;
       var dogCount = 0;
       var startTime = Date.now();
       var elapsedTime = 0;
+      this.time = "00:00:0";
+      this.dogs.push(dogCount);
       this.timeId = setInterval(() => {
         elapsedTime = Date.now() - startTime;
         var m = Math.floor(elapsedTime / 60000);
         var s = Math.floor((elapsedTime % 60000) / 1000);
         var ms = elapsedTime % 1000;
-        m = ("0" + m).slice(-2);
+        if (s >= 30) m = ("0" + m).slice(-2);
         s = ("0" + s).slice(-2);
-        ms = ("0" + ms).slice(-2);
+        ms = ("0" + ms).slice(-1);
         this.time = m + ":" + s + ":" + ms;
-      }, 10);
+        count++;
+        if (count % 10 === 0) {
+          dogCount++;
+          this.dogs.push(dogCount);
+        }
+      }, 100);
     },
     err() {
       clearInterval(this.timeId);
@@ -116,6 +124,17 @@ p {
 }
 
 ul {
+  padding-inline-start: 0px;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+}
+
+img {
+  width: 30px;
+  height: auto;
 }
 </style>
