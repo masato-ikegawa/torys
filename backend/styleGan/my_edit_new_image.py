@@ -140,7 +140,7 @@ def my_style_mixing(vec_syn, col_styles, truncation_psi, my_data_dir, number):
     print('Saving images...')
     os.makedirs(my_data_dir+'/stylemix_images', exist_ok=True)
     for (row_seed, col_seed), image in image_dict.items():
-        if row_seed==1 and col_seed==number:
+        if row_seed==1 and col_seed==number+2:
             result_path = my_data_dir+'/stylemix_images/'+str(row_seed)+'-'+str(col_seed)+'.png'
             PIL.Image.fromarray(image, 'RGB').save(my_data_dir+'/stylemix_images/'+str(row_seed)+'-'+str(col_seed)+'.png')
     return result_path
@@ -153,9 +153,11 @@ def predict(number, img_path):
     
     # 顔画像の切り出し
     raw_img_path =  img_path # 後で削除
+    print(raw_img_path)
     img_name = raw_img_path.replace('images/','')
     DATAOUT_DIR = img_path.replace('.jpg','') #images/2020xxxx 後で削除(=my)
     ALIGNED_IMAGES_DIR = DATAOUT_DIR +'/pic'
+    os.makedirs(ALIGNED_IMAGES_DIR, exist_ok=True)
     TFRECORD_DIR = DATAOUT_DIR + '/dataset'
 
     landmarks_detector = LandmarksDetector(landmarks_model_path)
