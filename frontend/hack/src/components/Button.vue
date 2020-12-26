@@ -1,6 +1,5 @@
 <template>
-  <button v-if="active" id="act-btn">{{ label }}</button>
-  <button v-else id="anact-btn">{{ label }}</button>
+  <button>{{ label }}</button>
 </template>
 
 <script>
@@ -8,24 +7,23 @@ export default {
   name: "Button",
   props: {
     label: String,
-    active: { type: Boolean, default: false },
   },
 };
 </script>
 
 <style>
-#act-btn {
+.actBtn {
   cursor: pointer;
   border: solid 4px rgb(255, 16, 18);
   background: white;
   color: rgb(255, 16, 18);
 }
 
-#act-btn:hover {
+.actBtn:hover {
   opacity: 0.8;
 }
 
-#anact-btn {
+.anactBtn {
   background: #ddd;
   border: solid 4px #999;
   color: #000;

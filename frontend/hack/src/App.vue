@@ -2,18 +2,33 @@
   <div class="container">
     <Header />
     <main>
-      <div class="imagepost-wrapper disp">
+      <div
+        class="imagepost-wrapper"
+        :class="{ disp: isImgWrapDisp, nodisp: isImgWrapNodisp }"
+      >
         <ImagePost @passImageStatus="serveImageStatus" />
       </div>
-      <Button @click="dImage()" label="この画像で決定" class="btn disp" />
-      <div class="omikuji-wrapper nodisp">
+      <Button
+        @click="dImage()"
+        label="この画像で決定"
+        class="btn"
+        :class="{
+          disp: isBtnDisp,
+          nodisp: isBtnNodisp,
+          actBtn: isBtn1Act,
+          anactBtn: isBtn1anAct,
+        }"
+      />
+      <div
+        class="omikuji-wrapper"
+        :class="{ disp: isOmiWrapDisp, nodisp: isOmiWrapNodisp }"
+      >
         <Omikuji ref="omikujiRef" />
       </div>
       <Button
         @click="dResult()"
         label="おみくじを回す"
-        class="btn nodisp"
-        id="act-btn"
+        class="btn actBtn"
         :class="{ disp: isBtn2Disp, nodisp: isBtn2Nodisp }"
       />
     </main>
@@ -45,14 +60,22 @@ export default {
       imgData: "",
       result: Number,
       activate: { type: Boolean, default: false },
+      isBtnDisp: true,
+      isBtnNodisp: false,
+      isBtn1Act: false,
+      isBtn1anAct: true,
       isBtn2Disp: false,
       isBtn2Nodisp: true,
+      isImgWrapDisp: true,
+      isImgWrapNodisp: false,
+      isOmiWrapDisp: false,
+      isOmiWrapNodisp: true,
     };
   },
   methods: {
     serveImageStatus() {
-      const btn1 = this.$el.children[1].children[1];
-      btn1.id = "act-btn";
+      this.isBtn1Act = true;
+      this.isBtn1anAct = false;
     },
     shuffle() {
       var random = Math.floor(Math.random() * 5);
@@ -62,14 +85,12 @@ export default {
     dImage() {
       if (this.$el.children[1].children[0].children[0].children[2]) {
         this.imgData = this.$el.children[1].children[0].children[0].children[2].src;
-        this.$el.children[1].children[0].classList.remove("disp");
-        this.$el.children[1].children[0].classList.add("nodisp");
-        const btn1 = this.$el.children[1].children[1];
-        btn1.classList.remove("disp");
-        btn1.classList.add("nodisp");
-        const omikujiwrapper = this.$el.children[1].children[2];
-        omikujiwrapper.classList.remove("nodisp");
-        omikujiwrapper.classList.add("disp");
+        this.isImgWrapDisp = false;
+        this.isImgWrapNodisp = true;
+        this.isBtnDisp = false;
+        this.isBtnNodisp = true;
+        this.isOmiWrapDisp = true;
+        this.isOmiWrapNodisp = false;
         this.isBtn2Nodisp = false;
         this.isBtn2Disp = true;
       } else {
@@ -94,6 +115,8 @@ export default {
       this.$refs.omikujiRef.loading();
       this.isBtn2Nodisp = true;
       this.isBtn2Disp = false;
+      console.log("result:", this.result);
+      console.log("imgData:", this.imgData);
       axios.post(
         "http://localhost:5000/upload",
         { result: this.result, img: this.imgData },
