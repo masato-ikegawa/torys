@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, request, jsonify
 
 # Ajax通信
 from flask_cors import CORS
@@ -38,13 +38,15 @@ def decode_img(req):
     cv2.imwrite(f"images/{datetime.now().strftime('%s')}.jpg",img_resize) # 7
     return 'ok'
 
-@app.route('/upload',methods=['POST'])
+@app.route('/upload',methods=['POST','GET'])
 def upload():
     if request.method == 'POST':
         result = decode_img(request)
         return jsonify({'result':result})
+    elif request.method == 'GET':
+        return jsonify({'result':'please post image'})
 
 
 # app.run(host, port)：hostとportを指定してflaskサーバを起動
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=80,debug=True)
