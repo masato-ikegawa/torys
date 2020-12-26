@@ -1,93 +1,89 @@
 <template>
   <div class="container">
-    <ImageButton />
-    <div class="omikuji-wrapper nodisp">
-      <h1>ニコニコおみくじ</h1>
-      <Button class="btn disp" label="おみくじを回す" @click="tappedBtn"></Button>
-      <Button class="btn nodisp" label="もう1度回す" @click="tappedBtn"></Button>
-      <Loading class="loading nodisp"></Loading>
-      <TweetButton after="true" :result="resultValue" class="tweet nodisp"></TweetButton>
-    </div>
+    <Header />
+    <main>
+      <div class="imagepost-wrapper disp">
+        <ImagePost />
+      </div>
+      <Button @click="dImage()" label="この画像で決定" class="btn disp" />
+      <div class="omikuji-wrapper nodisp">
+        <Omikuji />
+      </div>
+      <Button @click="dResult()" label="おみくじを回す" class="btn nodisp" />
+    </main>
     <Footer />
   </div>
 </template>
 
-<script lang="ts">
-import Button from "./components/Button.vue";
-import Loading from "./components/Loading.vue";
-import Footer from "./components/Footer.vue";
-import TweetButton from "./components/TweetButton.vue";
-import ImageButton from "./components/ImageButton.vue";
+<script>
+import axios from "axios";
 
-function omikuji() {
-  var random = Math.floor(Math.random() * 16);
-  return random;
-}
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import ImagePost from "./components/ImagePost.vue";
+import Omikuji from "./components/Omikuji.vue";
+import Button from "./components/Button.vue";
 
 export default {
   name: "App",
   components: {
-    Button,
-    Loading,
+    Header,
     Footer,
-    TweetButton,
-    ImageButton,
+    ImagePost,
+    Omikuji,
+    Button,
   },
   data() {
     return {
-      resultValue: "",
+      resultText: "",
+      imgData: "",
+      result: Number,
     };
   },
   methods: {
-    tappedBtn() {
-      this.$el.children[0].textContent = "Now Loading...";
-
-      this.$el.children[1].classList.remove("disp");
-      this.$el.children[1].classList.add("nodisp");
-
-      this.$el.children[2].classList.remove("disp");
-      this.$el.children[2].classList.add("nodisp");
-
-      this.$el.children[3].classList.remove("nodisp");
-      this.$el.children[3].classList.add("disp");
-
-      this.$el.children[4].classList.remove("disp");
-      this.$el.children[4].classList.add("nodisp");
-
-      var result = omikuji();
-
-      setTimeout(() => {
-        if (result < 1) {
-          this.$el.children[0].textContent = "大凶…";
-          this.$data.resultValue = "大凶";
-        } else if (result < 3) {
-          this.$el.children[0].textContent = "凶…";
-          this.$data.resultValue = "凶";
-        } else if (result < 6) {
-          this.$el.children[0].textContent = "末吉";
-          this.$data.resultValue = "末吉";
-        } else if (result < 10) {
-          this.$el.children[0].textContent = "小吉";
-          this.$data.resultValue = "小吉";
-        } else if (result < 13) {
-          this.$el.children[0].textContent = "中吉";
-          this.$data.resultValue = "中吉";
-        } else if (result < 15) {
-          this.$el.children[0].textContent = "吉！";
-          this.$data.resultValue = "吉";
-        } else {
-          this.$el.children[0].textContent = "大吉！";
-          this.$data.resultValue = "大吉";
-        }
-        this.$el.children[2].classList.remove("nodisp");
-        this.$el.children[2].classList.add("disp");
-
-        this.$el.children[3].classList.remove("disp");
-        this.$el.children[3].classList.add("nodisp");
-
-        this.$el.children[4].classList.remove("nodisp");
-        this.$el.children[4].classList.add("disp");
-      }, 1000);
+    shuffle() {
+      var random = Math.floor(Math.random() * 5);
+      this.result = random;
+      return random;
+    },
+    dImage() {
+      if (this.$el.children[1].children[0].children[0].children[2]) {
+        this.imgData = this.$el.children[1].children[0].children[0].children[2].src;
+        console.log(this.imgData);
+        this.$el.children[1].children[0].classList.remove("disp");
+        this.$el.children[1].children[0].classList.add("nodisp");
+        const btn1 = this.$el.children[1].children[1];
+        btn1.classList.remove("disp");
+        btn1.classList.add("nodisp");
+        const omikujiwrapper = this.$el.children[1].children[2];
+        omikujiwrapper.classList.remove("nodisp");
+        omikujiwrapper.classList.add("disp");
+        const btn2 = this.$el.children[1].children[3];
+        btn2.classList.remove("nodisp");
+        btn2.classList.add("disp");
+      } else {
+        console.log("ないよ");
+      }
+    },
+    dResult() {
+      const resValue = this.shuffle();
+      if (resValue === 0) {
+        this.resultText = "凶";
+      } else if (resValue === 1) {
+        this.resultText = "末吉";
+      } else if (resValue === 2) {
+        this.resultText = "小吉";
+      } else if (resValue === 3) {
+        this.resultText = "中吉";
+      } else if (resValue === 4) {
+        this.resultText = "大吉";
+      }
+      this.result = resValue;
+      axios.post(
+        "http://localhost:5000/upload",
+        { result: this.result, img: this.imgData },
+        { headers: { "Content-Type": "application/json" } }
+      );
     },
   },
 };
@@ -96,8 +92,6 @@ export default {
 <style>
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
@@ -115,39 +109,23 @@ body {
 .container {
   width: 100%;
   min-height: 100vh;
-  padding-bottom: 70px;
+  height: 700px;
   position: relative;
   box-sizing: border-box;
 }
+</style>
 
-h1 {
-  font-size: 18px;
-  margin-top: 0;
-  padding-top: 60px;
-}
-
+<style scoped>
 .btn {
-  margin-top: 80px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.loading {
-  display: none;
-}
-
-.tweet {
-  margin-top: 30px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.disp {
-  display: block !important;
+  margin: 0 auto;
 }
 
 .nodisp {
-  display: none !important;
+  display: none;
+}
+
+.disp {
+  display: block;
 }
 
 @media screen and (min-width: 600px) {
