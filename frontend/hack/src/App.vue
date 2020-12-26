@@ -83,7 +83,6 @@ export default {
     },
     thisIsImgData(imgData) {
       this.imgData = imgData;
-      console.log(this.imgData);
       if (this.imgData) {
         this.atension = "";
       }
