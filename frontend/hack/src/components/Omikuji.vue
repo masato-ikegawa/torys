@@ -1,7 +1,15 @@
 <template>
   <div>
     <h1>{{ theme }}</h1>
+    <p>{{ time }}</p>
     <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
+    <ul>
+      <li v-for="(dog, index) in dogs" :key="index">
+        <img src="../assets/dog_corgi.png" />
+      </li>
+    </ul>
+
+    <img :src="imageData" v-if="imageData" />
     <TweetButton
       after="true"
       result="resultValue"
@@ -30,18 +38,56 @@ export default {
       theme: "ニコニコおみくじ",
       isTweetDisp: false,
       isTweetNodisp: true,
+      imageData: "",
+      dogs: [],
+      time: "",
+      timeId: 0,
     };
   },
   methods: {
     loading() {
       this.isDisp = true;
       this.isNodisp = false;
-      this.theme = "NowLoading...";
+      this.theme = "Now Loading...(1秒に1匹犬が増えます)";
+      var count = 0;
+      var dogCount = 0;
+      var startTime = Date.now();
+      var elapsedTime = 0;
+      this.time = "00:00:0";
+      this.dogs.push(dogCount);
+      this.timeId = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        var m = Math.floor(elapsedTime / 60000);
+        var s = Math.floor((elapsedTime % 60000) / 1000);
+        var ms = elapsedTime % 1000;
+        if (s >= 30) m = ("0" + m).slice(-2);
+        s = ("0" + s).slice(-2);
+        ms = ("0" + ms).slice(-1);
+        this.time = m + ":" + s + ":" + ms;
+        count++;
+        if (count % 10 === 0) {
+          dogCount++;
+          this.dogs.push(dogCount);
+        }
+      }, 100);
     },
     err() {
+      clearInterval(this.timeId);
+      this.time = "";
       this.isDisp = false;
       this.isNodisp = true;
       this.theme = "エラー…";
+    },
+    success(resultText, resultImgData) {
+      clearInterval(this.timeId);
+      this.time = "";
+      this.isDisp = false;
+      this.isNodisp = true;
+      if (resultImgData === "") {
+        this.theme = resultText + "(画像表示できないよ)";
+      }
+      this.theme = resultText;
+      this.imageData = resultImgData;
     },
   },
 };
@@ -49,9 +95,14 @@ export default {
 
 <style scoped>
 h1 {
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 20px;
   font-weight: bold;
+}
+
+p {
+  color: black;
+  font-size: 12px;
 }
 
 .loading {
@@ -70,5 +121,44 @@ h1 {
 
 .nodisp {
   display: none !important;
+}
+
+ul {
+  padding-inline-start: 0px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+}
+
+img {
+  width: 30px;
+  height: auto;
+}
+
+@media screen and (min-width: 400px) {
+  h1 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  h1 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  h1 {
+    font-size: 21px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  h1 {
+    font-size: 24px;
+  }
 }
 </style>
