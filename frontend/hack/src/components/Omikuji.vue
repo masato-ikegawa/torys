@@ -38,6 +38,11 @@ export default {
       this.isNodisp = false;
       this.theme = "NowLoading...";
     },
+    err() {
+      this.isDisp = false;
+      this.isNodisp = true;
+      this.theme = "エラー…";
+    },
   },
 };
 </script>
@@ -46,6 +51,7 @@ export default {
 h1 {
   font-size: 18px;
   margin-top: 20px;
+  font-weight: bold;
 }
 
 .loading {
