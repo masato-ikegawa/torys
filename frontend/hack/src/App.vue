@@ -19,6 +19,7 @@
           anactBtn: isBtn1anAct,
         }"
       />
+      <p>{{ atension }}</p>
       <div
         class="omikuji-wrapper"
         :class="{ disp: isOmiWrapDisp, nodisp: isOmiWrapNodisp }"
@@ -71,6 +72,7 @@ export default {
       isOmiWrapDisp: false,
       isOmiWrapNodisp: true,
       isDataImgReceive: false,
+      atension: "",
     };
   },
   methods: {
@@ -82,6 +84,9 @@ export default {
     thisIsImgData(imgData) {
       this.imgData = imgData;
       console.log(this.imgData);
+      if (this.imgData) {
+        this.atension = "";
+      }
     },
     shuffle() {
       var random = Math.floor(Math.random() * 5);
@@ -99,7 +104,7 @@ export default {
         this.isBtn2Nodisp = false;
         this.isBtn2Disp = true;
       } else {
-        console.log("画像がないのにボタンを押している");
+        this.atension = "画像を選択してください";
       }
     },
     dResult() {
@@ -170,6 +175,15 @@ body {
   display: block;
 }
 
+p {
+  text-align: center;
+  font-size: 8px;
+  color: rgb(250, 80, 60);
+  font-weight: bold;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 @media screen and (min-width: 600px) {
   h1 {
     font-size: 18px;
@@ -179,6 +193,11 @@ body {
 @media screen and (min-width: 900px) {
   h1 {
     font-size: 21px;
+  }
+  p {
+    font-size: 10px;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 }
 

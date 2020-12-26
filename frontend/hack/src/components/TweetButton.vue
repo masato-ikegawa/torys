@@ -35,8 +35,9 @@ export default {
 a {
   display: block;
   width: 60px;
-  height: 23px;
+  height: 24px;
   font-family: "Helvetica Neue", Arial, sans-serif;
+  text-align: center;
   font-size: 15px;
   color: white;
   border: 1px solid #ccc;
@@ -45,6 +46,7 @@ a {
   line-height: 23px;
   text-decoration: none;
   font-weight: bold;
+  user-select: none;
 }
 
 a:hover {
