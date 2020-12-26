@@ -28,7 +28,12 @@ export default {
           this.imageData = e.target.result;
         };
         reader.readAsDataURL(file);
+        this.passApp();
       }
+    },
+    passApp() {
+      this.$emit("passImageStatus");
+      console.log("状態を送ります");
     },
   },
 };

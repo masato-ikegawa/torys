@@ -3,13 +3,13 @@
     <Header />
     <main>
       <div class="imagepost-wrapper disp">
-        <ImagePost />
+        <ImagePost @passImageStatus="serveImageStatus" />
       </div>
       <Button @click="dImage()" label="この画像で決定" class="btn disp" />
       <div class="omikuji-wrapper nodisp">
         <Omikuji />
       </div>
-      <Button @click="dResult()" label="おみくじを回す" class="btn nodisp" />
+      <Button @click="dResult()" label="おみくじを回す" class="btn nodisp" id="act-btn" />
     </main>
     <Footer />
   </div>
@@ -38,9 +38,14 @@ export default {
       resultText: "",
       imgData: "",
       result: Number,
+      activate: { type: Boolean, default: false },
     };
   },
   methods: {
+    serveImageStatus() {
+      const btn1 = this.$el.children[1].children[1];
+      btn1.id = "act-btn";
+    },
     shuffle() {
       var random = Math.floor(Math.random() * 5);
       this.result = random;

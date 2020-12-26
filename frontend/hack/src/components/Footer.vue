@@ -37,7 +37,7 @@ p {
 }
 
 @media screen and (min-width: 900px) {
-  p{
+  p {
     font-size: 15px;
   }
 }

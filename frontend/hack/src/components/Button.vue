@@ -1,6 +1,6 @@
 <template>
-  <button v-if="active" class="act">{{ label }}</button>
-  <button v-else class="anact">{{ label }}</button>
+  <button v-if="active" id="act-btn">{{ label }}</button>
+  <button v-else id="anact-btn">{{ label }}</button>
 </template>
 
 <script>
@@ -12,6 +12,25 @@ export default {
   },
 };
 </script>
+
+<style>
+#act-btn {
+  cursor: pointer;
+  border: solid 4px rgb(255, 16, 18);
+  background: white;
+  color: rgb(255, 16, 18);
+}
+
+#act-btn:hover {
+  opacity: 0.8;
+}
+
+#anact-btn {
+  background: #ddd;
+  border: solid 4px #999;
+  color: #000;
+}
+</style>
 
 <style scoped>
 button {
@@ -27,23 +46,6 @@ button {
 
 button:focus {
   outline: 0;
-}
-
-.act {
-  cursor: pointer;
-  border: solid 4px rgb(255, 16, 18);
-  background: white;
-  color: rgb(255, 16, 18);
-}
-
-.act:hover {
-  opacity: 0.8;
-}
-
-.anact {
-  background: #ddd;
-  border: solid 4px #999;
-  color: #000;
 }
 
 @media screen and (min-width: 900px) {

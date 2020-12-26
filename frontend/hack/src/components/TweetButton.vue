@@ -1,34 +1,32 @@
 <template>
-  <a
-    id="tweetbutton"
-    target="_blank"
-    rel="noopener"
-    :href="href()"
-    >Tweet</a
-  >
+  <a id="tweetbutton" target="_blank" rel="noopener" :href="href()">Tweet</a>
 </template>
 
 <script>
 export default {
   name: "TweetButton",
-  props:{
-    after: {type:Boolean, default:false},
-    result: {type:String, default:""},
+  props: {
+    after: { type: Boolean, default: false },
+    result: { type: String, default: "" },
   },
   methods: {
-    href:function() {
-      const url = "http://localhost:8080/"
+    href: function () {
+      const url = "http://localhost:8080/";
 
-      if (this.after && (this.result != "")){
-        const result = this.result
-        const link = "http://twitter.com/share?url="+url+"&text=ニコニコおみくじで" + result + "が出ました"
-        return link
+      if (this.after && this.result != "") {
+        const result = this.result;
+        const link =
+          "http://twitter.com/share?url=" +
+          url +
+          "&text=ニコニコおみくじで" +
+          result +
+          "が出ました";
+        return link;
+      } else {
+        const link = "http://twitter.com/share?url=" + url + "&text=ニコニコおみくじ";
+        return link;
       }
-      else{
-        const link = "http://twitter.com/share?url="+ url +"&text=ニコニコおみくじ"
-        return link
-      }
-    }
+    },
   },
 };
 </script>
