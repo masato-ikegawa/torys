@@ -35,7 +35,7 @@ def decode_img(req):
     # img_negaposi = 255 - img_src # 4
     # img_gray = cv2.cvtColor(img_negaposi, cv2.COLOR_BGR2GRAY) # 5
     #img_resize = cv2.resize(img_src,(28,28)) # 6
-    cv2.imwrite(f"{datetime.now().strftime('%s')}.jpg",img_src) # 7
+    cv2.imwrite(f"images/{datetime.now().strftime('%s')}.jpg",img_src) # 7
     print('fin')
     return 'ok'
 
