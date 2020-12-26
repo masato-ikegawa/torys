@@ -3,7 +3,7 @@
     <h1>{{ theme }}</h1>
     <p>{{ time }}</p>
     <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
-    <ul>
+    <ul :class="{ flex: isListDisp, nodisp: isListNodisp }">
       <li v-for="(dog, index) in dogs" :key="index">
         <img src="../assets/dog_corgi.png" />
       </li>
@@ -42,6 +42,8 @@ export default {
       dogs: [],
       time: "",
       timeId: 0,
+      isListDisp: true,
+      isListNodisp: false,
     };
   },
   methods: {
@@ -53,7 +55,7 @@ export default {
       var dogCount = 0;
       var startTime = Date.now();
       var elapsedTime = 0;
-      this.time = "00:00:0";
+      this.time = "00:00:0(5分くらいかかるよ！)";
       this.dogs.push(dogCount);
       this.timeId = setInterval(() => {
         elapsedTime = Date.now() - startTime;
@@ -63,7 +65,7 @@ export default {
         if (s >= 30) m = ("0" + m).slice(-2);
         s = ("0" + s).slice(-2);
         ms = ("0" + ms).slice(-1);
-        this.time = m + ":" + s + ":" + ms;
+        this.time = m + ":" + s + ":" + ms + "(5分くらいかかるよ！)";
         count++;
         if (count % 10 === 0) {
           dogCount++;
@@ -72,6 +74,8 @@ export default {
       }, 100);
     },
     err() {
+      this.isListDisp = false;
+      this.isListNodisp = true;
       clearInterval(this.timeId);
       this.time = "";
       this.isDisp = false;
@@ -79,15 +83,19 @@ export default {
       this.theme = "エラー…";
     },
     success(resultText, resultImgData) {
+      this.isListDisp = false;
+      this.isListNodisp = true;
       clearInterval(this.timeId);
       this.time = "";
       this.isDisp = false;
       this.isNodisp = true;
-      if (resultImgData === "") {
-        this.theme = resultText + "(画像表示できないよ)";
+      console.log(resultImgData);
+      if (resultImgData == "") {
+        this.theme = resultText + "(画像が表示できないよ)";
+      } else {
+        this.theme = resultText;
+        this.imageData = resultImgData;
       }
-      this.theme = resultText;
-      this.imageData = resultImgData;
     },
   },
 };
@@ -121,6 +129,10 @@ p {
 
 .nodisp {
   display: none !important;
+}
+
+.flex {
+  display: flex;
 }
 
 ul {
