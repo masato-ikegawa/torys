@@ -1,5 +1,6 @@
 <template>
-  <button>{{ label }}</button>
+  <button v-if="active" class="act">{{ label }}</button>
+  <button v-else class="anact">{{ label }}</button>
 </template>
 
 <script>
@@ -7,6 +8,7 @@ export default {
   name: "Button",
   props: {
     label: String,
+    active: { type: Boolean, default: false },
   },
 };
 </script>
@@ -17,22 +19,31 @@ button {
   display: block;
   user-select: none;
   font-size: 15px;
-  cursor: pointer;
   width: 250px;
   height: 40px;
-  border: solid 4px rgb(255, 16, 18);
   border-radius: 10px;
-  background: white;
   font-weight: bold;
-  color: rgb(255, 16, 18);
-}
-
-button:hover {
-  opacity: 0.8;
 }
 
 button:focus {
   outline: 0;
+}
+
+.act {
+  cursor: pointer;
+  border: solid 4px rgb(255, 16, 18);
+  background: white;
+  color: rgb(255, 16, 18);
+}
+
+.act:hover {
+  opacity: 0.8;
+}
+
+.anact {
+  background: #ddd;
+  border: solid 4px #999;
+  color: #000;
 }
 
 @media screen and (min-width: 900px) {
