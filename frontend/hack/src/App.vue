@@ -96,6 +96,7 @@ export default {
 
 body {
   margin: 0;
+  background: rgb(253, 234, 126);
 }
 
 #app {

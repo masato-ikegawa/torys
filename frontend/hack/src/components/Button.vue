@@ -13,6 +13,8 @@ export default {
 
 <style scoped>
 button {
+  align-items: center;
+  display: block;
   user-select: none;
   font-size: 15px;
   cursor: pointer;
@@ -33,19 +35,10 @@ button:focus {
   outline: 0;
 }
 
-@media screen and (min-width: 600px) {
-  button {
-    width: 250px;
-    height: 40px;
-    font-size: 13px;
-  }
-}
-
 @media screen and (min-width: 900px) {
   button {
     width: 300px;
     height: 45px;
-    font-size: 15px;
   }
 }
 
