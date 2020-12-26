@@ -6,7 +6,7 @@
         class="imagepost-wrapper"
         :class="{ disp: isImgWrapDisp, nodisp: isImgWrapNodisp }"
       >
-        <ImagePost @passImageStatus="serveImageStatus" />
+        <ImagePost @passImageStatus="serveImageStatus" @catchImgData="thisIsImgData" />
       </div>
       <Button
         @click="dImage()"
@@ -70,12 +70,18 @@ export default {
       isImgWrapNodisp: false,
       isOmiWrapDisp: false,
       isOmiWrapNodisp: true,
+      isDataImgReceive: false,
     };
   },
   methods: {
     serveImageStatus() {
       this.isBtn1Act = true;
       this.isBtn1anAct = false;
+      this.isDataImgReceive = true;
+    },
+    thisIsImgData(imgData) {
+      this.imgData = imgData;
+      console.log(this.imgData);
     },
     shuffle() {
       var random = Math.floor(Math.random() * 5);
@@ -83,8 +89,7 @@ export default {
       return random;
     },
     dImage() {
-      if (this.$el.children[1].children[0].children[0].children[2]) {
-        this.imgData = this.$el.children[1].children[0].children[0].children[2].src;
+      if (this.isDataImgReceive && this.imgData) {
         this.isImgWrapDisp = false;
         this.isImgWrapNodisp = true;
         this.isBtnDisp = false;
@@ -111,12 +116,10 @@ export default {
         this.resultText = "大吉";
       }
       this.result = resValue;
-      console.log("へい", this.$refs.omikujiRef);
       this.$refs.omikujiRef.loading();
       this.isBtn2Nodisp = true;
       this.isBtn2Disp = false;
-      console.log("result:", this.result);
-      console.log("imgData:", this.imgData);
+      console.log({ result: this.result, img: this.imgData });
       axios.post(
         "http://localhost:5000/upload",
         { result: this.result, img: this.imgData },

@@ -2,7 +2,12 @@
   <div>
     <h1>{{ theme }}</h1>
     <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
-    <TweetButton after="true" :result="resultValue" class="tweet nodisp"></TweetButton>
+    <TweetButton
+      after="true"
+      result="resultValue"
+      class="tweet"
+      :class="{ disp: isTweetDisp, nodisp: isTweetNodisp }"
+    ></TweetButton>
   </div>
 </template>
 
@@ -23,13 +28,14 @@ export default {
       isDisp: false,
       isNodisp: true,
       theme: "ニコニコおみくじ",
+      isTweetDisp: false,
+      isTweetNodisp: true,
     };
   },
   methods: {
     loading() {
       this.isDisp = true;
       this.isNodisp = false;
-      console.log("ローディング");
       this.theme = "NowLoading...";
     },
   },
