@@ -1,7 +1,10 @@
 <template>
   <div class="image-container">
     <h4>顔写真を選んでください</h4>
-    <input type="file" accept="image/*" @change="fileChange($event)" />
+    <label for="file_upload">
+      ファイルを選択して下さい
+      <input type="file" id="file_upload" accept="image/*" @change="fileChange($event)" />
+    </label>
     <img :src="imageData" v-if="imageData" />
   </div>
 </template>
@@ -68,6 +71,30 @@ img {
   margin-bottom: 20px;
 }
 
+label > input {
+  display: none;
+}
+
+label {
+  width: 180px;
+  height: 30px;
+  line-height: 30px;
+  display: block;
+  cursor: pointer;
+  background: rgb(50, 150, 220);
+  border: solid 1px #aaa;
+  border-radius: 5px;
+  font-size: 13px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+}
+
+label:hover {
+  opacity: 0.8;
+}
+
 @media screen and (min-width: 900px) {
   img {
     width: 125px;
@@ -79,6 +106,12 @@ img {
     font-size: 17px;
     padding-top: 9px;
     margin-bottom: 18px;
+  }
+
+  label {
+    width: 200px;
+    height: 32px;
+    font-size: 14px;
   }
 }
 </style>
