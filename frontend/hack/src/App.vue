@@ -196,26 +196,11 @@ p {
   margin-bottom: 4px;
 }
 
-@media screen and (min-width: 600px) {
-  h1 {
-    font-size: 18px;
-  }
-}
-
 @media screen and (min-width: 900px) {
-  h1 {
-    font-size: 21px;
-  }
   p {
     font-size: 10px;
     margin-top: 6px;
     margin-bottom: 6px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  h1 {
-    font-size: 24px;
   }
 }
 </style>

@@ -48,7 +48,7 @@ export default {
     loading() {
       this.isDisp = true;
       this.isNodisp = false;
-      this.theme = "NowLoading...(1秒に1匹犬が増えます)";
+      this.theme = "Now Loading...(1秒に1匹犬が増えます)";
       var count = 0;
       var dogCount = 0;
       var startTime = Date.now();
@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 h1 {
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 20px;
   font-weight: bold;
 }
@@ -136,5 +136,29 @@ ul {
 img {
   width: 30px;
   height: auto;
+}
+
+@media screen and (min-width: 400px) {
+  h1 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  h1 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  h1 {
+    font-size: 21px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  h1 {
+    font-size: 24px;
+  }
 }
 </style>
