@@ -28,12 +28,13 @@ def upload():
     if request.method == 'POST':
         baseurl = 'http://172.18.02:6007/predict'
         data = request
+        print(data.json)
         headers = {
             'Content-Type': 'application/json',
         }
         print(type(data))
         # req = urllib.request.Request(baseurl, json.dumps(data.json).encode(), headers)
-        req = urllib.request.Request(baseurl, data, headers)
+        req = urllib.request.Request(baseurl, json.dumps(data.json).encode(), headers)
         with urllib.request.urlopen(req) as res:
             predicted_img_base64 = res.read()
         return jsonify({'img':predicted_img_base64})
