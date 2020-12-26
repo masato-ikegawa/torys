@@ -35,4 +35,10 @@ p {
   color: white;
   font-weight: bold;
 }
+
+@media screen and (min-width: 900px) {
+  p{
+    font-size: 15px;
+  }
+}
 </style>
