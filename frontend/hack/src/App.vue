@@ -83,7 +83,6 @@ export default {
     },
     thisIsImgData(imgData) {
       this.imgData = imgData;
-      console.log(this.imgData);
       if (this.imgData) {
         this.atension = "";
       }
@@ -124,12 +123,20 @@ export default {
       this.$refs.omikujiRef.loading();
       this.isBtn2Nodisp = true;
       this.isBtn2Disp = false;
-      console.log({ result: this.result, img: this.imgData });
-      axios.post(
-        "http://localhost:5000/upload",
-        { result: this.result, img: this.imgData },
-        { headers: { "Content-Type": "application/json" } }
-      );
+      axios
+        .post(
+          "http://54.150.148.100/upload",
+          { result: this.result, img: this.imgData },
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then((res) => {
+          console.log("登録完了");
+          console.log("res:", res);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$refs.omikujiRef.err();
+        });
     },
   },
 };
