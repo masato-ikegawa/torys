@@ -29,13 +29,14 @@ def random():
     return jsonify(response)
 
 def decode_img(req):
-    img_str = re.search(r'base64,(.*)', req.form['img']).group(1) # 1
+    img_str = re.search(r'base64,(.*)', req.json['img']).group(1) # 1
     nparr = np.fromstring(base64.b64decode(img_str), np.uint8) # 2
     img_src = cv2.imdecode(nparr, cv2.IMREAD_COLOR) # 3
     # img_negaposi = 255 - img_src # 4
     # img_gray = cv2.cvtColor(img_negaposi, cv2.COLOR_BGR2GRAY) # 5
-    img_resize = cv2.resize(img_gray,(28,28)) # 6
-    cv2.imwrite(f"images/{datetime.now().strftime('%s')}.jpg",img_resize) # 7
+    #img_resize = cv2.resize(img_src,(28,28)) # 6
+    cv2.imwrite(f"{datetime.now().strftime('%s')}.jpg",img_src) # 7
+    print('fin')
     return 'ok'
 
 @app.route('/upload',methods=['POST','GET'])
