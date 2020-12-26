@@ -19,14 +19,14 @@ export default {
 <style scoped>
 footer {
   width: 100%;
-  height: 100px;
+  height: 80px;
   background: #aaa;
   position: absolute;
   bottom: 0;
 }
 
 .tweet {
-  margin: 15px auto;
+  margin: 10px auto;
 }
 
 p {
@@ -37,7 +37,7 @@ p {
 }
 
 @media screen and (min-width: 900px) {
-  p{
+  p {
     font-size: 15px;
   }
 }

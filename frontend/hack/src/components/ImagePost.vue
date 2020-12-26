@@ -26,9 +26,19 @@ export default {
         reader.onload = (e) => {
           // imageDataに格納
           this.imageData = e.target.result;
+          // 画像を受け取ったのでApp.vueの決定ボタンを有効にしてもらう
+          this.passApp();
+          // 画像を受け取ったのでApp.vueにimgDataを送信
+          this.sendImgData();
         };
         reader.readAsDataURL(file);
       }
+    },
+    passApp() {
+      this.$emit("passImageStatus");
+    },
+    sendImgData() {
+      this.$emit("catchImgData", this.imageData);
     },
   },
 };
@@ -54,15 +64,8 @@ img {
   max-height: 200px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
   margin-bottom: 20px;
-}
-
-#nodisplay {
-  display: none;
-}
-
-#display {
-  display: block;
 }
 
 @media screen and (min-width: 900px) {

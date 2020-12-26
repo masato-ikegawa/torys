@@ -11,47 +11,51 @@ export default {
 };
 </script>
 
-<style scoped>
-button {
-  user-select: none;
-  width: 280px;
-  height: 40px;
-  font-size: 13px;
+<style>
+.actBtn {
   cursor: pointer;
-  border: solid 1px #000;
-  border-radius: 10px;
-  background: rgb(249, 142, 18);
-  font-weight: bold;
-  color: #fff;
+  border: solid 4px rgb(255, 16, 18);
+  background: white;
+  color: rgb(255, 16, 18);
 }
 
-button:hover {
+.actBtn:hover {
   opacity: 0.8;
+}
+
+.anactBtn {
+  background: #ddd;
+  border: solid 4px #999;
+  color: #000;
+}
+</style>
+
+<style scoped>
+button {
+  align-items: center;
+  display: block;
+  user-select: none;
+  font-size: 15px;
+  width: 250px;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
 button:focus {
   outline: 0;
 }
 
-@media screen and (min-width: 600px) {
-  button {
-    width: 280px;
-    height: 40px;
-    font-size: 13px;
-  }
-}
-
 @media screen and (min-width: 900px) {
   button {
-    width: 350px;
-    height: 40px;
-    font-size: 15px;
+    width: 300px;
+    height: 45px;
   }
 }
 
 @media screen and (min-width: 1200px) {
   button {
-    width: 400px;
+    width: 450px;
     height: 50px;
     font-size: 17px;
   }

@@ -2,14 +2,36 @@
   <div class="container">
     <Header />
     <main>
-      <div class="imagepost-wrapper disp">
-        <ImagePost />
+      <div
+        class="imagepost-wrapper"
+        :class="{ disp: isImgWrapDisp, nodisp: isImgWrapNodisp }"
+      >
+        <ImagePost @passImageStatus="serveImageStatus" @catchImgData="thisIsImgData" />
       </div>
-      <Button @click="dImage()" label="この画像で決定" class="btn disp" />
-      <div class="omikuji-wrapper nodisp">
-        <Omikuji />
+      <Button
+        @click="dImage()"
+        label="この画像で決定"
+        class="btn"
+        :class="{
+          disp: isBtnDisp,
+          nodisp: isBtnNodisp,
+          actBtn: isBtn1Act,
+          anactBtn: isBtn1anAct,
+        }"
+      />
+      <p>{{ atension }}</p>
+      <div
+        class="omikuji-wrapper"
+        :class="{ disp: isOmiWrapDisp, nodisp: isOmiWrapNodisp }"
+      >
+        <Omikuji ref="omikujiRef" />
       </div>
-      <Button @click="dResult()" label="おみくじを回す" class="btn nodisp" />
+      <Button
+        @click="dResult()"
+        label="おみくじを回す"
+        class="btn actBtn"
+        :class="{ disp: isBtn2Disp, nodisp: isBtn2Nodisp }"
+      />
     </main>
     <Footer />
   </div>
@@ -38,31 +60,51 @@ export default {
       resultText: "",
       imgData: "",
       result: Number,
+      activate: { type: Boolean, default: false },
+      isBtnDisp: true,
+      isBtnNodisp: false,
+      isBtn1Act: false,
+      isBtn1anAct: true,
+      isBtn2Disp: false,
+      isBtn2Nodisp: true,
+      isImgWrapDisp: true,
+      isImgWrapNodisp: false,
+      isOmiWrapDisp: false,
+      isOmiWrapNodisp: true,
+      isDataImgReceive: false,
+      atension: "",
     };
   },
   methods: {
+    serveImageStatus() {
+      this.isBtn1Act = true;
+      this.isBtn1anAct = false;
+      this.isDataImgReceive = true;
+    },
+    thisIsImgData(imgData) {
+      this.imgData = imgData;
+      console.log(this.imgData);
+      if (this.imgData) {
+        this.atension = "";
+      }
+    },
     shuffle() {
       var random = Math.floor(Math.random() * 5);
       this.result = random;
       return random;
     },
     dImage() {
-      if (this.$el.children[1].children[0].children[0].children[2]) {
-        this.imgData = this.$el.children[1].children[0].children[0].children[2].src;
-        console.log(this.imgData);
-        this.$el.children[1].children[0].classList.remove("disp");
-        this.$el.children[1].children[0].classList.add("nodisp");
-        const btn1 = this.$el.children[1].children[1];
-        btn1.classList.remove("disp");
-        btn1.classList.add("nodisp");
-        const omikujiwrapper = this.$el.children[1].children[2];
-        omikujiwrapper.classList.remove("nodisp");
-        omikujiwrapper.classList.add("disp");
-        const btn2 = this.$el.children[1].children[3];
-        btn2.classList.remove("nodisp");
-        btn2.classList.add("disp");
+      if (this.isDataImgReceive && this.imgData) {
+        this.isImgWrapDisp = false;
+        this.isImgWrapNodisp = true;
+        this.isBtnDisp = false;
+        this.isBtnNodisp = true;
+        this.isOmiWrapDisp = true;
+        this.isOmiWrapNodisp = false;
+        this.isBtn2Nodisp = false;
+        this.isBtn2Disp = true;
       } else {
-        console.log("ないよ");
+        this.atension = "画像を選択してください";
       }
     },
     dResult() {
@@ -79,6 +121,10 @@ export default {
         this.resultText = "大吉";
       }
       this.result = resValue;
+      this.$refs.omikujiRef.loading();
+      this.isBtn2Nodisp = true;
+      this.isBtn2Disp = false;
+      console.log({ result: this.result, img: this.imgData });
       axios.post(
         "http://localhost:5000/upload",
         { result: this.result, img: this.imgData },
@@ -96,6 +142,7 @@ export default {
 
 body {
   margin: 0;
+  background: rgb(253, 234, 126);
 }
 
 #app {
@@ -109,7 +156,7 @@ body {
 .container {
   width: 100%;
   min-height: 100vh;
-  height: 700px;
+  height: 500px;
   position: relative;
   box-sizing: border-box;
 }
@@ -128,6 +175,15 @@ body {
   display: block;
 }
 
+p {
+  text-align: center;
+  font-size: 8px;
+  color: rgb(250, 80, 60);
+  font-weight: bold;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 @media screen and (min-width: 600px) {
   h1 {
     font-size: 18px;
@@ -137,6 +193,11 @@ body {
 @media screen and (min-width: 900px) {
   h1 {
     font-size: 21px;
+  }
+  p {
+    font-size: 10px;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 }
 
