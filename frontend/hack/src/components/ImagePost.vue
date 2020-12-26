@@ -33,7 +33,6 @@ export default {
     },
     passApp() {
       this.$emit("passImageStatus");
-      console.log("状態を送ります");
     },
   },
 };

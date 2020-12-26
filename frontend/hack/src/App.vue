@@ -7,9 +7,15 @@
       </div>
       <Button @click="dImage()" label="この画像で決定" class="btn disp" />
       <div class="omikuji-wrapper nodisp">
-        <Omikuji />
+        <Omikuji ref="omikujiRef" />
       </div>
-      <Button @click="dResult()" label="おみくじを回す" class="btn nodisp" id="act-btn" />
+      <Button
+        @click="dResult()"
+        label="おみくじを回す"
+        class="btn nodisp"
+        id="act-btn"
+        :class="{ disp: isBtn2Disp, nodisp: isBtn2Nodisp }"
+      />
     </main>
     <Footer />
   </div>
@@ -39,6 +45,8 @@ export default {
       imgData: "",
       result: Number,
       activate: { type: Boolean, default: false },
+      isBtn2Disp: false,
+      isBtn2Nodisp: true,
     };
   },
   methods: {
@@ -54,7 +62,6 @@ export default {
     dImage() {
       if (this.$el.children[1].children[0].children[0].children[2]) {
         this.imgData = this.$el.children[1].children[0].children[0].children[2].src;
-        console.log(this.imgData);
         this.$el.children[1].children[0].classList.remove("disp");
         this.$el.children[1].children[0].classList.add("nodisp");
         const btn1 = this.$el.children[1].children[1];
@@ -63,11 +70,10 @@ export default {
         const omikujiwrapper = this.$el.children[1].children[2];
         omikujiwrapper.classList.remove("nodisp");
         omikujiwrapper.classList.add("disp");
-        const btn2 = this.$el.children[1].children[3];
-        btn2.classList.remove("nodisp");
-        btn2.classList.add("disp");
+        this.isBtn2Nodisp = false;
+        this.isBtn2Disp = true;
       } else {
-        console.log("ないよ");
+        console.log("画像がないのにボタンを押している");
       }
     },
     dResult() {
@@ -84,6 +90,10 @@ export default {
         this.resultText = "大吉";
       }
       this.result = resValue;
+      console.log("へい", this.$refs.omikujiRef);
+      this.$refs.omikujiRef.loading();
+      this.isBtn2Nodisp = true;
+      this.isBtn2Disp = false;
       axios.post(
         "http://localhost:5000/upload",
         { result: this.result, img: this.imgData },

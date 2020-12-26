@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>ニコニコおみくじ</h1>
-    <Loading class="loading nodisp"></Loading>
+    <h1>{{ theme }}</h1>
+    <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
     <TweetButton after="true" :result="resultValue" class="tweet nodisp"></TweetButton>
   </div>
 </template>
@@ -20,7 +20,18 @@ export default {
     return {
       result: Number,
       resultText: String,
+      isDisp: false,
+      isNodisp: true,
+      theme: "ニコニコおみくじ",
     };
+  },
+  methods: {
+    loading() {
+      this.isDisp = true;
+      this.isNodisp = false;
+      console.log("ローディング");
+      this.theme = "NowLoading...";
+    },
   },
 };
 </script>
@@ -28,8 +39,7 @@ export default {
 <style scoped>
 h1 {
   font-size: 18px;
-  margin-top: 0;
-  padding-top: 60px;
+  margin-top: 20px;
 }
 
 .loading {
