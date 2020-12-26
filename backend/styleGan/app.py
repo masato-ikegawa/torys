@@ -58,8 +58,8 @@ def predict():
         print(type(img_predicted_base64))
 
         # 作ったディレクトリとか保存した.jpgファイルとかを消す
-        #os.remove(img_path)
-        #shutil.rmtree(img_path.replace('.jpg','')+'/') # ←my_edit_new_image.predictで勝手に作ってたディレクトリ　生成物入ってる
+        os.remove(img_path)
+        shutil.rmtree(img_path.replace('.jpg','')+'/') # ←my_edit_new_image.predictで勝手に作ってたディレクトリ　生成物入ってる
         return jsonify({'result':base64.b64encode(img_predicted_base64).decode('utf-8')})
     elif request.method == 'GET':
         return jsonify({'result':'please post image'})
