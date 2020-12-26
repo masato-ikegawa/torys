@@ -2,43 +2,19 @@
   <div class="image-container">
     <h4>顔写真を選んでください</h4>
     <input type="file" accept="image/*" @change="fileChange($event)" />
-    <button class="post-btn" @click="tappedPostButton()" v-if="imageData">
-      この画像に決定
-    </button>
     <img :src="imageData" v-if="imageData" />
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  name: "ImageButton",
-  components: {},
+  name: "ImagePost",
   data() {
     return {
       imageData: "",
-      data: {
-        bpi: null,
-      },
     };
   },
   methods: {
-    imageToBase64() {
-      if (this.imageData) {
-        return this.imageData;
-      } else {
-        return null;
-      }
-    },
-    tappedPostButton() {
-      const data = this.imageToBase64();
-      axios.post(
-        "http://localhost:5000/upload",
-        { img: data },
-        { headers: { "Content-Type": "application/json" } }
-      );
-    },
     // ファイル読み込み
     fileChange(e) {
       const files = e.target.files;
@@ -71,28 +47,29 @@ h4 {
   margin-bottom: 12px;
 }
 
-.post-btn {
-  display: inline-block;
-  height: auto;
-  width: 120px;
-  cursor: pointer;
-}
-
 img {
   display: block;
-  width: 200px;
+  width: 100px;
   height: auto;
-  max-height: 500px;
+  max-height: 200px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
 }
 
+#nodisplay {
+  display: none;
+}
+
+#display {
+  display: block;
+}
+
 @media screen and (min-width: 900px) {
   img {
-    width: 250px;
+    width: 125px;
     height: auto;
-    max-height: 500px;
+    max-height: 250px;
   }
 
   h4 {
