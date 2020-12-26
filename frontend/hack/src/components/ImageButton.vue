@@ -33,7 +33,11 @@ export default {
     },
     tappedPostButton() {
       const data = this.imageToBase64();
-      axios.post("http://localhost:5000/upload", { img: data });
+      axios.post(
+        "http://localhost:5000/upload",
+        { img: data },
+        { headers: { "Content-Type": "application/json" } }
+      );
     },
     // ファイル読み込み
     fileChange(e) {
