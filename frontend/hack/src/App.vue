@@ -127,22 +127,21 @@ export default {
       this.$refs.omikujiRef.loading();
       this.isBtn2Nodisp = true;
       this.isBtn2Disp = false;
-      axios
-        .post(
-          "http://54.150.148.100/upload",
-          { result: this.result, img: this.imgData },
-          { headers: { "Content-Type": "application/json" } }
-        )
-        .then((res) => {
-          console.log("登録完了");
-          console.log("res:", res);
-          this.resImgData = res.data("img");
-          this.getRes();
-        })
-        .catch((err) => {
-          console.log(err);
-          this.$refs.omikujiRef.err();
-        });
+      axios.post(
+        "http://54.150.148.100/upload",
+        { result: this.result, img: this.imgData },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      // .then((res) => {
+      //   console.log("登録完了");
+      //   console.log("res:", res);
+      //   this.resImgData = res.data("img");
+      //   this.getRes();
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      //   this.$refs.omikujiRef.err();
+      // });
     },
   },
 };
