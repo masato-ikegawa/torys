@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, jsonify
+import urllib.request
+import json
 
 # Ajax通信
 from flask_cors import CORS
@@ -21,32 +23,23 @@ CORS(app)
 def catch(path):
     return render_template("index.html")
 
-@app.route('/rand')
-def random():
-    response = {
-        'randomNum': randint(1,100)
-    }
-    return jsonify(response)
-
-def decode_img(req):
-    img_str = re.search(r'base64,(.*)', req.json['img']).group(1)
-    nparr = np.fromstring(base64.b64decode(img_str), np.uint8)
-    img_src = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    cv2.imwrite(f"images/{datetime.now().strftime('%s')}.jpg",img_src)
-    return 'ok'
-
-def encode_img(img):
-    img_base64 = base64.b64encode(img)
-    return img_base64
-
 @app.route('/upload',methods=['POST','GET'])
 def upload():
     if request.method == 'POST':
-        print(request.json['result'])
-        result = decode_img(request)
-        return jsonify({'result':result})
+        baseurl = 'http://172.18.02:6007/predict'
+        data = request
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        print(type(data))
+        # req = urllib.request.Request(baseurl, json.dumps(data.json).encode(), headers)
+        req = urllib.request.Request(baseurl, data, headers)
+        with urllib.request.urlopen(req) as res:
+            predicted_img_base64 = res.read()
+        return jsonify({'img':predicted_img_base64})
     elif request.method == 'GET':
         return jsonify({'result':'please post image'})
+        return render_template("index.html")
 
 
 # app.run(host, port)：hostとportを指定してflaskサーバを起動
