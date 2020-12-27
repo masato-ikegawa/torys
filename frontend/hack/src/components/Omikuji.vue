@@ -100,7 +100,9 @@ export default {
       this.isTweetDisp = true;
       this.isTweetNodisp = false;
       this.$refs.twetbtn.resultChange(resultText);
-      this.Base64ToImage();
+      this.Base64ToImage(this.imageData, function (img) {
+        this.$el.appendChild(img);
+      });
     },
     Base64ToImage(base64img, callback) {
       var img = new Image();
@@ -108,7 +110,6 @@ export default {
         callback(img);
       };
       img.src = base64img;
-      this.$el.appendChild(img);
     },
   },
 };
