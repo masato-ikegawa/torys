@@ -94,11 +94,11 @@ export default {
         this.theme = resultText + "(画像が表示できないよ)";
       } else {
         this.theme = resultText;
-        this.imageData = resultImgData;
+        this.imageData = "data:image/jpeg;base64," + resultImgData;
         console.log("src:", this.imageData);
         this.Base64ToImage(this.imageData, function (img) {
-          this.imageData = "data:image/jpeg;base64," + resultImgData;
-          this.imageData = this.this.$el.appendChild(img);
+          this.imageData = this.$el.appendChild(img);
+          console.log(this.$el);
         });
       }
       this.isTweetDisp = true;
