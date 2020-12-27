@@ -9,7 +9,7 @@ services:
     volumes:
       - ./:/usr/src
     ports:
-      - "80:80"
+      - "5000:5000"
   vue:
     build:
       context: .
@@ -36,4 +36,4 @@ services:
     volumes:
       - ./:/usr/src
     ports:
-      - "6007:6007"
+      - "80:80"

@@ -129,7 +129,7 @@ export default {
       this.isBtn2Disp = false;
       axios
         .post(
-          "http://54.150.148.100/upload",
+          "http://54.150.148.100/predict",
           { result: this.result, img: this.imgData },
           { headers: { "Content-Type": "application/json" } }
         )
