@@ -96,13 +96,14 @@ export default {
         this.theme = resultText;
         this.imageData = resultImgData;
         console.log("src:", this.imageData);
+        this.Base64ToImage(this.imageData, function (img) {
+          this.imageData = "data:image/jpeg;base64," + resultImgData;
+          this.imageData = this.this.$el.appendChild(img);
+        });
       }
       this.isTweetDisp = true;
       this.isTweetNodisp = false;
       this.$refs.twetbtn.resultChange(resultText);
-      this.Base64ToImage(this.imageData, function (img) {
-        this.$el.appendChild(img);
-      });
     },
     Base64ToImage(base64img, callback) {
       var img = new Image();
