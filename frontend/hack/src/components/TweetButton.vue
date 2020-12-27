@@ -7,11 +7,15 @@ export default {
   name: "TweetButton",
   props: {
     after: { type: Boolean, default: false },
-    result: { type: String, default: "" },
+  },
+  data() {
+    return {
+      result: "",
+    };
   },
   methods: {
     href: function () {
-      const url = "http://localhost:8080/";
+      const url = "http://54.150.148.100";
 
       if (this.after && this.result != "") {
         const result = this.result;
@@ -26,6 +30,9 @@ export default {
         const link = "http://twitter.com/share?url=" + url + "&text=ニコニコおみくじ";
         return link;
       }
+    },
+    resultChange(resultText) {
+      this.result = resultText;
     },
   },
 };
