@@ -94,23 +94,12 @@ export default {
         this.theme = resultText + "(画像が表示できないよ)";
       } else {
         this.theme = resultText;
-        this.imageData = "data:image/jpeg;base64," + resultImgData;
+        this.imageData = "data:image/jpg;base64," + resultImgData;
         console.log("src:", this.imageData);
-        this.Base64ToImage(this.imageData, function (img) {
-          this.imageData = this.$el.appendChild(img);
-          console.log(this.$el);
-        });
       }
       this.isTweetDisp = true;
       this.isTweetNodisp = false;
       this.$refs.twetbtn.resultChange(resultText);
-    },
-    Base64ToImage(base64img, callback) {
-      var img = new Image();
-      img.onload = function () {
-        callback(img);
-      };
-      img.src = base64img;
     },
   },
 };
