@@ -94,7 +94,7 @@ export default {
         this.theme = resultText + "(画像が表示できないよ)";
       } else {
         this.theme = resultText;
-        this.imageData = resultImgData;
+        this.imageData = "data:image/png;base64," + resultImgData;
       }
     },
   },
