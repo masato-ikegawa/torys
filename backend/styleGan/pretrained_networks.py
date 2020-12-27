@@ -10,7 +10,7 @@ import pickle
 import dnnlib
 import dnnlib.tflib as tflib
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # StyleGAN2 Google Drive root: https://drive.google.com/open?id=1QHc-yF5C3DChRwSdZKcx1w6K8JvSxQi7
 
 gdrive_urls = {
@@ -52,14 +52,17 @@ gdrive_urls = {
     'gdrive:networks/table2/stylegan2-ffhq-config-e-Gskip-Dskip.pkl':       'http://d36zk2xti64re0.cloudfront.net/stylegan2/networks/table2/stylegan2-ffhq-config-e-Gskip-Dskip.pkl',
 }
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
 
 def get_path_or_url(path_or_gdrive_path):
     return gdrive_urls.get(path_or_gdrive_path, path_or_gdrive_path)
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
 
 _cached_networks = dict()
+
 
 def load_networks(path_or_gdrive_path):
     path_or_url = get_path_or_url(path_or_gdrive_path)
@@ -67,7 +70,8 @@ def load_networks(path_or_gdrive_path):
         return _cached_networks[path_or_url]
 
     if dnnlib.util.is_url(path_or_url):
-        stream = dnnlib.util.open_url(path_or_url, cache_dir='.stylegan2-cache')
+        stream = dnnlib.util.open_url(
+            path_or_url, cache_dir='.stylegan2-cache')
     else:
         stream = open(path_or_url, 'rb')
 
@@ -77,4 +81,29 @@ def load_networks(path_or_gdrive_path):
     _cached_networks[path_or_url] = G, D, Gs
     return G, D, Gs
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+
+def main():
+    network_pkl = 'gdrive:networks/stylegan2-ffhq-config-f.pkl'
+    path_or_url = get_path_or_url(network_pkl)
+    if path_or_url in _cached_networks:
+        return _cached_networks[path_or_url]
+
+    if dnnlib.util.is_url(path_or_url):
+        stream = dnnlib.util.open_url(
+            path_or_url, cache_dir='.stylegan2-cache')
+    else:
+        stream = open(path_or_url, 'rb')
+
+    tflib.init_tf()
+    with stream:
+        G, D, Gs = pickle.load(stream, encoding='latin1')
+    _cached_networks[path_or_url] = G, D, Gs
+
+    with open("pretrained.pkl", mode="wb") as f:
+        pickle.dump(_cached_networks[path_or_url], f)
+
+
+if __name__ == '__main__':
+    main()
