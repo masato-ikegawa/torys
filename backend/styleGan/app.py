@@ -13,6 +13,7 @@ import os
 app = Flask(__name__)
 
 import my_edit_new_image
+from PIL import Image
 
 app = Flask(__name__, static_folder = "../../frontend/hack/dist/static", template_folder="../../frontend/hack/dist")
 
@@ -57,16 +58,20 @@ def predict():
         result_img_path = my_edit_new_image.predict(number,img_path)
         print('finish')
 
+        img = Image.open(result_img_path)
+        img_resize = img.resize((256,256))
+        img_resize.save(result_img_path)
         with open(result_img_path,'rb') as f:
             predicted_img = f.read()
+        print(os.path.getsize(result_img_path))
 
         #Base64で画像をエンコード
         img_predicted_base64 = encode_img(predicted_img)
         print(type(img_predicted_base64))
 
         # 作ったディレクトリとか保存した.jpgファイルとかを消す
-        os.remove(img_path)
-        shutil.rmtree(img_path.replace('.jpg','')+'/') # ←my_edit_new_image.predictで勝手に作ってたディレクトリ　生成物入ってる
+        #os.remove(img_path)
+        #shutil.rmtree(img_path.replace('.jpg','')+'/') # ←my_edit_new_image.predictで勝手に作ってたディレクトリ　生成物入ってる
         return jsonify({'result':base64.b64encode(img_predicted_base64).decode('utf-8')})
     elif request.method == 'GET':
         return jsonify({'result':'please post image'})
