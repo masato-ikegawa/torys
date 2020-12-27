@@ -35,8 +35,6 @@ export default {
           this.sendImgData();
         };
         reader.readAsDataURL(file);
-        const src = this.$el.children[2].src;
-        console.log("src:", src);
       }
     },
     passApp() {

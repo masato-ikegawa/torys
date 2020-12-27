@@ -90,7 +90,7 @@ export default {
       this.time = "";
       this.isDisp = false;
       this.isNodisp = true;
-      if (resultImgData == "") {
+      if (resultImgData === "") {
         this.theme = resultText + "(画像が表示できないよ)";
       } else {
         this.theme = resultText;
@@ -100,6 +100,15 @@ export default {
       this.isTweetDisp = true;
       this.isTweetNodisp = false;
       this.$refs.twetbtn.resultChange(resultText);
+      this.Base64ToImage();
+    },
+    Base64ToImage(base64img, callback) {
+      var img = new Image();
+      img.onload = function () {
+        callback(img);
+      };
+      img.src = base64img;
+      this.$el.appendChild(img);
     },
   },
 };
