@@ -5,11 +5,10 @@
     <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
     <ul :class="{ flex: isListDisp, nodisp: isListNodisp }">
       <li v-for="(dog, index) in dogs" :key="index">
-        <img src="../assets/dog_corgi.png" />
+        <img class="dogImg" src="../assets/dog_corgi.png" />
       </li>
     </ul>
-
-    <img :src="imageData" v-if="imageData" />
+    <img class="resultImg" :src="imageData" v-if="imageData" />
     <TweetButton
       after="true"
       result="resultValue"
@@ -145,9 +144,20 @@ ul {
   list-style: none;
 }
 
-img {
+.dogImg {
   width: 30px;
   height: auto;
+}
+
+.resultImg {
+  display: block;
+  width: 100px;
+  height: auto;
+  max-height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 @media screen and (min-width: 400px) {
@@ -165,6 +175,12 @@ img {
 @media screen and (min-width: 900px) {
   h1 {
     font-size: 21px;
+  }
+
+  .resultImg {
+    width: 125px;
+    height: auto;
+    max-height: 250px;
   }
 }
 
