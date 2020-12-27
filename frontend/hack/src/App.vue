@@ -137,7 +137,7 @@ export default {
           console.log("登録完了");
           console.log("res:", res);
           console.log(res.data);
-          this.resImgData = res.data.img["result"];
+          this.resImgData = res.data["result"];
           console.log(this.resImgData);
           this.getRes();
         })
