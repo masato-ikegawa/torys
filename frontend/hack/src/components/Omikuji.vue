@@ -5,11 +5,11 @@
     <Loading class="loading" :class="{ disp: isDisp, nodisp: isNodisp }"></Loading>
     <ul :class="{ flex: isListDisp, nodisp: isListNodisp }">
       <li v-for="(dog, index) in dogs" :key="index">
-        <img class="dogImg" src="../assets/dog_corgi.png" />
+        <img class="dogImg" src="../assets/dog_corgi.png" alt="犬の画像" />
       </li>
     </ul>
 
-    <img class="resultImg" :src="imageData" v-if="imageData" />
+    <img class="resultImg" :src="imageData" v-if="imageData" alt="結果の画像" />
     <TweetButton
       after="true"
       result="resultValue"

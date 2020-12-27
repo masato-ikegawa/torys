@@ -5,7 +5,7 @@
       ファイルを選択して下さい
       <input type="file" id="file_upload" accept="image/*" @change="fileChange($event)" />
     </label>
-    <img :src="imageData" v-if="imageData" />
+    <img :src="imageData" v-if="imageData" alt="選択した画像" />
   </div>
 </template>
 
