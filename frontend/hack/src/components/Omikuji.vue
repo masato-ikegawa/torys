@@ -74,14 +74,17 @@ export default {
         }
       }, 100);
     },
-    err() {
+    err(resultText) {
       this.isListDisp = false;
       this.isListNodisp = true;
       clearInterval(this.timeId);
       this.time = "";
       this.isDisp = false;
       this.isNodisp = true;
-      this.theme = "エラー…";
+      this.theme = resultText + "(画像表示エラー…)";
+      this.isTweetDisp = true;
+      this.isTweetNodisp = false;
+      this.$refs.twetbtn.resultChange(resultText);
     },
     success(resultText, resultImgData) {
       this.isListDisp = false;
