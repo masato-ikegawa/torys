@@ -141,7 +141,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.$refs.omikujiRef.err();
+          this.$refs.omikujiRef.err(this.resultText);
         });
     },
   },
