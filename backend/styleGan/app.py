@@ -14,10 +14,17 @@ app = Flask(__name__)
 
 import my_edit_new_image
 
-@app.route('/')
-def hello():
-    name = "Hello World"
-    return name
+app = Flask(__name__, static_folder = "../../frontend/hack/dist/static", template_folder="../../frontend/hack/dist")
+
+app.config.from_object(__name__)
+
+CORS(app)
+
+# 任意のリクエストを受け取った時、index.htmlを参照
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch(path):
+    return render_template("index.html")
 
 """
 def styleGan_predict(number, img_path):
@@ -66,4 +73,4 @@ def predict():
 
 ## おまじない
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=6007,debug=True)
+    app.run(host='0.0.0.0',port=80,debug=True)
