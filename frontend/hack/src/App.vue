@@ -136,9 +136,7 @@ export default {
         .then((res) => {
           console.log("登録完了");
           console.log("res:", res);
-          console.log(res.data);
           this.resImgData = res.data["result"];
-          console.log(this.resImgData);
           this.getRes();
         })
         .catch((err) => {
