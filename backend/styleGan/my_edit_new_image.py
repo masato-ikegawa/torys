@@ -293,7 +293,7 @@ def main():
     dataset_tool.create_from_images(
         tfrecord_dir='./my/dataset', image_dir='./my/pic', shuffle=0)
 
-    vec_syn = project_real_images(1)  # ()内はマルチ解像度のデータセットを作成した時の画像枚数
+    vec_syn = project_real_images2(1, Gs=Gs)  # ()内はマルチ解像度のデータセットを作成した時の画像枚数
     # display_pic('./my/pic/*.*')  # ターゲット画像の表示
     # display(vec_syn)  # 探索した潜在変数によって生成した画像
 

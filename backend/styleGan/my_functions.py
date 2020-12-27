@@ -351,7 +351,7 @@ def my_project_real_images2(num_images, data_dir, Gs):
     return vec_syn
 
 
-def project_real_images(num_images, Gs):
+def project_real_images2(num_images, Gs):
     dataset_name = 'dataset'
     data_dir = 'my'
     num_snapshots = 5
